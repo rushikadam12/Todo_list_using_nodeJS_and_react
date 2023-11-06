@@ -5,8 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'hero-pattern': "url('/client/todo-list/src/assets/SignUp/Signup.jsx')",
+       
+      }
+    },
   },
   plugins: [],
+ 
 }
-
