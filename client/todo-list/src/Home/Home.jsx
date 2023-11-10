@@ -1,7 +1,33 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import Task from '../todoInput/Task';
 import { CiEdit } from 'react-icons/ci'
+import UserContext from '../assets/UseContext/UserContext'
+import 'jwt-decode'
+import axios from 'axios'
+
 const Home = () => {
+  const [UserData,setUserData]=useState([]);
+  const {userLogin, setUserLogin} = useContext(UserContext)
+  const FetchUserData=async()=>{
+    try{
+        const token=localStorage.getItem("token")
+        if(token){
+          const decrypted_Id=jwt_decode(token)
+          const decodedUserID=decrypted_Id.userId;
+          const resp=await axios.get(`http://localhost:3001/UserInfo/${decodedUserID}`,{
+            headers:{"x-access-token":token}
+          })
+          if(resp.data){
+            console.log(resp.data);
+          }
+          
+        }else{
+          setUserLogin(false)
+        }
+    }catch(err){
+      console.log(err);
+    }
+  }
   return (
     <>
       <div>

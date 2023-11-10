@@ -1,24 +1,89 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FiLogIn } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import UserContext from '../UseContext/UserContext';
+
 const Login = () => {
+  const Navigate=useNavigate()
+  const {userLogin,setUserLogin}=useContext(UserContext)
+  const [inputError,setInputError]=useState({
+    email:"",
+    password:"",
+  });
+  const[loginInfo,setloginInfo]=useState({
+    email:"",
+    password:"",
+  })
+  /*const LoginCheck=async()=>{
+    try{
+    const resp=await axios.post('http://localhost:3001/Login',{
+      email:loginInfo.email,
+      password:loginInfo.password,
+    });
+    console.log(await resp.data);
+    }catch(err){
+      console.log(err)
+    }
+  }*/
+  axios.defaults.withCredentials = true;
+  const loginUser=async()=>{
+    try{
+    const resp=await axios.post('http://localhost:3001/Login',{
+      email:loginInfo.email,
+      password:loginInfo.password,
+    
+    })
+    console.log(resp);
+    if(!await resp.data.auth){
+        console.log(resp.data.auth);
+        setUserLogin(false);
+        Navigate("/");
+        
+    }
+    else{
+        localStorage.setItem("token",resp.data.token);//here set or kept token into localstorage
+        setUserLogin(true)
+        Navigate('/Home');
+    }
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  const Emptyspan=()=>{
+      setInputError({
+        email:"",
+        password:"",
+
+      })
+  }
+
   return (
     <div className='w-full min-h-screen bg-[#3D47AF] flex  item-center justify-center'>
-        <div className='py-5 px 5 w-[80%] lg:w-[30%] h-fit lg:min-h-[40vh] bg-[#0A155A] md:px-2 md:py-5  flex flex-col  items-center justify-center self-center gap-5 rounded'>
+        <div className='py2 px-5 w-[80%] lg:w-[30%] h-fit lg:min-h-[40vh] bg-[#0A155A] md:px-2 md:py-5  flex flex-col  items-center justify-center self-center  gap-2 rounded-lg'>
             <div className='flex flex-col '>
                 <p className='py-1 text-xl text-slate-200'>Useremail ID</p>
-                <input type="email" className='px-2 py-1 text-lg rounded outline-none bg-slate-500 text-slate-200'/>
+                <input type="email" className='px-2 py-1 text-lg rounded outline-none bg-slate-500 text-slate-200' onChange={(e)=>{setloginInfo({...loginInfo,email:e.target.value})}} onFocus={Emptyspan}/>
+
+                {inputError.email==="email"?<><span className='text-red-500 font-semibold text-sm py-1'>Wrong email ID</span></>:""}
             </div>
             <div className='flex flex-col'> 
                 <p className='py-1 text-xl text-slate-200'>Password</p>
-                <input type="Password" className='px-2 py-1 text-lg rounded outline-none bg-slate-500 text-slate-200'/>
+                <input type="Password" className='px-2 py-1 text-lg rounded outline-none bg-slate-500 text-slate-200'
+                onChange={(e)=>{setloginInfo({...loginInfo,password:e.target.value})}}
+                />
+                  {inputError.password==="password"?<><span className='text-red-500 font-semibold text-sm py-1'>Wrong Password</span></>:""}
             </div>
-            <button  className='flex items-center justify-center w-1/2 px-1 py-1 mt-2 text-lg font-semibold text-center bg-pink-500 rounded text-slate-200'><FiLogIn color={'white'} size={25}/>Log In</button>
-            <p className='text-lg text-slate-200'>Do you want <Link to="/Signup" className='text-pink-200'>Sign Up?</Link></p>
+            <div className='flex  flex-col min-w-[74%] lg:min-w-[50%]'> 
+            <button  className='flex mt-7 items-center justify-center w-full px-1 py-1 mt-2 text-lg font-semibold text-center bg-pink-500 rounded hover:bg-pink-600 text-slate-200' onClick={loginUser} 
+            ><FiLogIn color={'white'} size={25}/>Log In</button>
+            <p className='text-lg text-center text-slate-200 py-2'>Do you want <Link to="/SignUp" className='text-pink-200 hover:text-pink-600'>Sign Up?</Link></p>
+            </div>
         </div>
 
     </div>
   )
 }
 
-export default Login
+export default Login;
