@@ -7,6 +7,7 @@ const cors=require('cors')
 const Login=require('./app/Login');
 const session = require('express-session');
 const cookieParser = require("cookie-parser");
+const User=require('./app/User')
 app.use(express.json());
 app.use(cors({
     origin:["http://localhost:5173"],
@@ -24,8 +25,8 @@ app.use(session({
     },
 }))
 
-app.use(Login)
-
+app.use(Login);
+app.use(User);
 
 app.listen(port,()=>{
     console.log('server is online');

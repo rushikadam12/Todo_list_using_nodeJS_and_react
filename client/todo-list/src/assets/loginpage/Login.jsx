@@ -15,17 +15,7 @@ const Login = () => {
     email:"",
     password:"",
   })
-  /*const LoginCheck=async()=>{
-    try{
-    const resp=await axios.post('http://localhost:3001/Login',{
-      email:loginInfo.email,
-      password:loginInfo.password,
-    });
-    console.log(await resp.data);
-    }catch(err){
-      console.log(err)
-    }
-  }*/
+  
   axios.defaults.withCredentials = true;
   const loginUser=async()=>{
     try{
@@ -70,7 +60,7 @@ const Login = () => {
             </div>
             <div className='flex flex-col'> 
                 <p className='py-1 text-xl text-slate-200'>Password</p>
-                <input type="Password" className='px-2 py-1 text-lg rounded outline-none bg-slate-500 text-slate-200'
+                <input type="password" className='px-2 py-1 text-lg rounded outline-none bg-slate-500 text-slate-200'
                 onChange={(e)=>{setloginInfo({...loginInfo,password:e.target.value})}}
                 />
                   {inputError.password==="password"?<><span className='text-red-500 font-semibold text-sm py-1'>Wrong Password</span></>:""}

@@ -5,14 +5,13 @@ const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const VerifyUser=require('./middleware')
-const db = mysql.createConnection({
+const VerifyUser = require("./middleware");
+module.exports=db = mysql.createConnection({
   user: process.env.USER,
   host: process.env.HOST,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
 });
-
 
 routes.get("/CheckUser", VerifyUser, (req, res) => {
   res.send({ msg: "your are authenticated" });
@@ -23,10 +22,12 @@ routes.post("/SignUp", async (req, res) => {
     const { username, email, password } = req.body;
 
     const hpassword = await bcrypt.hash(password, parseInt(process.env.SALT));
+
     const sql = "INSERT INTO userinfo (name,email,password) VALUES (?,?,?)";
+
     db.query(sql, [username, email, hpassword], (err, result) => {
       if (err) res.send(err);
-      else res.json({ msg: "data is added", result: result });
+      else res.json({ msg: "data is added"});
     });
   } catch (err) {
     res.send(err);
@@ -65,4 +66,4 @@ routes.post("/Login", async (req, res) => {
   });
 });
 
-module.exports =routes;
+module.exports = routes;

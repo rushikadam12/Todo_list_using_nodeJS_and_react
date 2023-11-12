@@ -51,9 +51,10 @@ const Signup = () => {
             <p className="py-2 text-slate-200 font-medium">User Name</p>
             <input
               placeholder="Enter your Name "
+              type="text"
               className="outline-none px-2 py-1 rounded font-semibold"
               onChange={(e)=>{setfilForm({...fillform,name:e.target.value})}}
-              type="text"
+             
             />
           </div>
           <div className="self-center  ">
