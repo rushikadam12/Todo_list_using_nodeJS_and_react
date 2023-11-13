@@ -10,27 +10,27 @@ const Home = () => {
   const {userLogin, setUserLogin} = useContext(UserContext)
   const FetchUserData=async()=>{
     try{
-        const token=localStorage.getItem("token")
+        const token=localStorage.getItem('token')
         if(token){
-          const decrypted_Id=jwtDecode(token)
-          const decodedUserID=decrypted_Id.userId;
-          console.log(decodedUserID)
-          const resp=await axios.get(`http://localhost:3001/UserInfo/${decodedUserID}`,{
+          /*const decrypted_Id=jwtDecode(token)
+          const decodedUserId=decrypted_Id.userId;
+          console.log(dedecrypted_Idd)*/
+          const resp=await axios.get(`http://localhost:3001/UserInfo`,{
             headers:{"x-access-token":token}
-          }).then((err,result)=>{
-            if(err){
-              console.log(err)
-            }else{
-              console.log(result)
-            }
           })
+          if(resp.data){
+            console.log(resp.data)
+          }else{
+            console.log("No user found")
+          }
           
           
         }else{
+          console.log('not token found')
           setUserLogin(false)
         }
     }catch(err){
-      console.log(err);
+      console.log({err:'wrong something'});
     }
   }
   useEffect(()=>{

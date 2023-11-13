@@ -43,25 +43,26 @@ routes.post("/Login", async (req, res) => {
     if (result.length > 0) {
       //comparing user password and database password using bcrypt
       bcrypt.compare(password, result[0].password, (err, response) => {
-        if (err) res.json({ error_msg: "wrong password" });
+        if (err) res.json({ auth:false,error_msg: "wrong password" });
         if (response) {
           const id = result[0].id;
           //create the token
           const token = jwt.sign({ id }, process.env.SECR_KEY, {
-            expiresIn: 300,
+            expiresIn: 86400,
           });
-          req.session.user = result; //to save the result in user session
+          req.session.user = result;
+          //console.log(req.session.user) //to save the result in user session
           res.json({
             auth: true,
             msg: "ok",
             token: token,
           });
         } else {
-          res.json({ auth: "false", error_msg: "wrong/password" });
+          res.json({ auth: false, error_msg: "wrong/password" });
         }
       });
     } else {
-      res.send({ error_msg: "no user found", auth: false });
+      res.send({auth: false, error_msg: "no user found" });
     }
   });
 });

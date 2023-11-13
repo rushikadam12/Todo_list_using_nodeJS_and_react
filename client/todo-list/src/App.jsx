@@ -18,10 +18,10 @@ function App() {
     const checkUserLogin = async () => {
       try {
         const resp = await axios.get("http://localhost:3001/CheckUser", {
-          headers: { "x-access-token": localStorage.getItem("token") }, // inside heder we kept the toke so here we checking if token is true or not
+          headers: { "x-access-token": localStorage.getItem("token") }, // inside header we kept the toke so here we checking if token is in the header or not
         });
 
-        if (resp.data.msg) {
+        if (resp.data.msg==="your are authenticated") {
           console.log("User already logged in");
           setUserLogin(true);
           console.log(userLogin);
@@ -40,19 +40,19 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/Login" element={<Login />} />
+       
           <Route path="/SignUp" element={<Signup />} />
-     
+          <Route path="/" element={<Login />} />
           {userLogin ? (
             
               <Route path="/Home" element={userLogin?<Home />:<Login/>} />
           
           ) : (
             
-            <Route path="/" element={<Navigate to="/Login"/>}/>
+            <Route path="/Login" element={<Login />} />
             
           )}
-          <Route path="/*" element={<h1>404 Not Found</h1>} />
+          <Route path="/*" element={<h1 className="text-2xl text-center">404 Not Found</h1>} />
         </Routes>
       </Router>
     </>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FiAlignJustify } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
 import { AiOutlineHome } from "react-icons/ai";
+import { PiSignInBold } from "react-icons/pi";
 import { FiInfo } from "react-icons/fi";
 import { FiLogOut } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
@@ -65,9 +66,15 @@ const Navbar = () => {
                 About
               </Link>
             </li>
-           <li className="py-2" onClick={()=>{localStorage.clear(),Navigate('/Login'),setUserLogin(false)}}>
+            <li className="py-2">
+              <Link className="flex flex-row hover:text-slate-300 " to="/SignUp">
+                <PiSignInBold size={32} />
+                SignUp
+              </Link>
+            </li>
+           <li className="py-2" onClick={()=>{localStorage.clear(),Navigate('/'),setUserLogin(false)}}>
               <Link className="flex flex-row hover:text-slate-300">
-                <FiLogOut size={32} />
+                <FiLogOut size={29} />
                 LogOut
               </Link>
             </li>
