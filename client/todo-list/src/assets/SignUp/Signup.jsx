@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 const Signup = () => {

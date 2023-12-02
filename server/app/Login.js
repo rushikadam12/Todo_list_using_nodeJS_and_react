@@ -1,12 +1,12 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const routes = express.Router();
-const mysql = require("mysql");
+const mysql = require('mysql2');
 const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const VerifyUser = require("./middleware");
-module.exports=db = mysql.createConnection({
+const db = mysql.createConnection({
   user: process.env.USER,
   host: process.env.HOST,
   password: process.env.PASSWORD,
@@ -45,7 +45,8 @@ routes.post("/Login", async (req, res) => {
       bcrypt.compare(password, result[0].password, (err, response) => {
         if (err) res.json({ auth:false,error_msg: "wrong password" });
         if (response) {
-          const id = result[0].id;
+          const id = result[0].iduserinfo;
+          console.log(id);
           //create the token
           const token = jwt.sign({ id }, process.env.SECR_KEY, {
             expiresIn: 86400,

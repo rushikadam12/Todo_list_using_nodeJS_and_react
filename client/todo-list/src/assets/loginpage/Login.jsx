@@ -39,7 +39,7 @@ const Login = () => {
         localStorage.setItem("token", resp.data.token); //here set or kept token into localstorage
         setUserLogin(true);
         Navigate("/Home");
-        console.log("i am here")
+    
       }
       else{
         console.log({err:'wrong input'})

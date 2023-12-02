@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useNavigate,
+
   Navigate,
 } from "react-router-dom";
 import Home from "./Home/Home";
@@ -14,6 +14,7 @@ import Signup from "./assets/SignUp/Signup";
 import axios from "axios";
 function App() {
   const {userLogin, setUserLogin} = useContext(UserContext)
+ 
   useEffect(() => {
     const checkUserLogin = async () => {
       try {
@@ -25,6 +26,7 @@ function App() {
           console.log("User already logged in");
           setUserLogin(true);
           console.log(userLogin);
+         
          
         } else {
           setUserLogin(false);

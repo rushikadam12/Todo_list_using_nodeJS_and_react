@@ -11,8 +11,9 @@ module.exports= VerifyUser = (req, res, next) => {
           res.send({ auth: false, error_msg: "failed to authenticate" });
         }
          else {
-          req.userId = decoded.id;
-          
+          const userID=decoded.id;// set the decoded id carefully otherwise you wont get the access of it
+          //here we decode the user id which we set in database so here we set it in req.userId which will be accessed by other POST/GET request which we use in for User.js for extracting user info
+          req.userId =userID;
           next();
         }
       });
