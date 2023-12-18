@@ -53,4 +53,35 @@ routes.get('/getuserTask',VerifyUser,async(req,res)=>{
     }
 })
 
+routes.post('/TaskChecked',VerifyUser,async(req,res)=>{
+    try{
+    const id=req.userId;
+    const {check,task}=req.body;
+    let Bicheck= Number(check).toString(2);
+    sql="UPDATE basic_crud.taskset SET complete=? WHERE id=? AND task=?"
+    
+    db.query(sql,[Bicheck,id,task],(err,result)=>{
+        if(err){
+            res.send(result);
+            console.log(err);
+        }else{
+            res.send({id:id,check:check,status:'ok'})
+            console.log("data is checked");
+        }
+    })
+    }catch(err){
+        console.log(err)
+    }
+    
+})
+
+// routes.get('/TaskCheckComplete',async(req,res)=>{
+//     try{
+        
+//     }catch(err){
+//         res.send(err);
+//     }
+
+// })
+
 module.exports=routes;

@@ -2,12 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import Task from '../todoInput/Task';
 import { CiEdit } from 'react-icons/ci'
 import UserContext from '../assets/UseContext/UserContext'
-//import { jwtDecode } from "jwt-decode";
 import axios from 'axios'
-
+import { Loader } from '../assets/loader/Loader';
 const Home = () => {
   const [UserData,setUserData]=useState([]);
-  const {userLogin, setUserLogin} = useContext(UserContext)
+  const {userLogin, setUserLogin,Loading,LoadingTime,CheckStatus} = useContext(UserContext)
   const [userTask,setuserTask]=useState("");
   const FetchUserData=async()=>{
     try{
@@ -45,7 +44,7 @@ const Home = () => {
       headers:{"x-access-token":token}
     })
     if(result){
-      console.log(await result)
+      console.log(result)
     }else{
       console.log({'Error':'Data is not added from frontend'})
     }
@@ -55,17 +54,17 @@ const Home = () => {
     }
   }
 
-
-
-
   useEffect(()=>{
-    
+    LoadingTime(2000);
     FetchUserData();
   },[])
+
   return (
     <>
-      <div>
-        <div className=' bg-[#3D47AF] px-2 py-2'>
+      <div  className='bg-[#3D47AF]'>
+      {Loading?(<><div className='w-full min-h-screen flex justify-center items-center'><Loader/></div></>):(<>
+        <div className=' px-2 py-2'>
+         
           <p className='text-5xl text-start text-slate-200'>{UserData.name} What's Up!</p></div>
         <div className='w-full min-h-[100vh] border-2  flex justify-center item-center flex-col py-2' style={{ background: '#3D47AF' }}>
 
@@ -79,7 +78,7 @@ const Home = () => {
           <Task />
 
 
-        </div>
+        </div></>)}
 
       </div>
     </>

@@ -1,2 +1,6 @@
 {
+    "workbench.preferredLightColorTheme": "Visual Studio Dark - C++",
+    "workbench.colorCustomizations": {
+        "terminal. foreground": "#ff0000",
+    }
 }
