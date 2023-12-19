@@ -3,7 +3,7 @@ import { AiOutlineDelete} from 'react-icons/ai';
 import axios from 'axios';
 import UserContext from '../assets/UseContext/UserContext';
 const Todotask = ({task,check}) => {
-  const [Checked, setChecked] = useState(false);
+  const [Checked, setChecked] = useState(check);
   const {CheckStatus,SetCheckStatus} = useContext(UserContext);
   const CheckMark=async()=>{
     const token=localStorage.getItem("token")
@@ -23,15 +23,15 @@ const Todotask = ({task,check}) => {
       console.log(err);
     }
   }   
-  const handelCheck=()=>{
+  const handelCheck=async()=>{
     setChecked(!Checked);
-   // setReloade(!Realoade);
+    SetCheckStatus(!CheckStatus)
+    //setReloade(!Realoade);
    
   }
   useEffect(()=>{
     CheckMark();
-    //SetCheckStatus(Checked);
-  },[task])
+  },[Checked,task])
   //problem is check box not render as per condition
   return (
     <>
@@ -48,7 +48,7 @@ const Todotask = ({task,check}) => {
     </div>
     </>
   )
- // ${? 'line-through' : ''}
+ 
 }
 
 export default Todotask;

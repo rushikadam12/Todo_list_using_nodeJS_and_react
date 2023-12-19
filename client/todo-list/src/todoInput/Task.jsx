@@ -4,7 +4,7 @@ import axios from "axios";
 import UserContext from "../assets/UseContext/UserContext";
 const Task = () => {
   const [userTask, setUserTask] = useState([]);
-  const {CheckStatus} = useContext(UserContext)
+  const {CheckStatus, setChecked} = useContext(UserContext)
   const fetchUserTask = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -30,7 +30,7 @@ const Task = () => {
 
   useEffect(() => {
     fetchUserTask();
-   // setReloade(!Reloade)
+   //setReloade(!Reloade)
   }, [CheckStatus]);
   return (
     <>
