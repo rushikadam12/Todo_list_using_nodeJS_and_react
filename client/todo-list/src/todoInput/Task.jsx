@@ -4,7 +4,7 @@ import axios from "axios";
 import UserContext from "../assets/UseContext/UserContext";
 const Task = () => {
   const [userTask, setUserTask] = useState([]);
-  const {CheckStatus, setChecked} = useContext(UserContext)
+  const {CheckStatus,isadd,isDelete} = useContext(UserContext)
   const fetchUserTask = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -12,7 +12,9 @@ const Task = () => {
         headers: { "x-access-token": token },
       });
       if (resp.data) {
+    
         console.log(resp.data)
+        
         const data=await resp.data;
         setUserTask(data);
        
@@ -29,9 +31,13 @@ const Task = () => {
 
 
   useEffect(() => {
-    fetchUserTask();
+   
+      fetchUserTask();
+    
+
+ 
    //setReloade(!Reloade)
-  }, [CheckStatus]);
+  }, [CheckStatus,isadd,isDelete]);
   return (
     <>
       <div className="flex self-center justify-center w-full min-h-screen px-5 lg:w-2/3">

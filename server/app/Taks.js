@@ -53,7 +53,7 @@ routes.get('/getuserTask',VerifyUser,async(req,res)=>{
     }
 })
 
-routes.post('/TaskChecked',VerifyUser,async(req,res)=>{
+routes.put('/TaskChecked',VerifyUser,async(req,res)=>{
     try{
     const id=req.userId;
     const {check,task}=req.body;
@@ -62,10 +62,11 @@ routes.post('/TaskChecked',VerifyUser,async(req,res)=>{
     
     db.query(sql,[Bicheck,id,task],(err,result)=>{
         if(err){
-            res.send(result);
+            res.status(500).send(result);
             console.log(err);
         }else{
-            res.send({id:id,check:check,status:'ok'})
+           
+            res.status(200).send({id:id,check:check,status:'ok'})
             console.log("data is checked");
         }
     })
@@ -75,13 +76,26 @@ routes.post('/TaskChecked',VerifyUser,async(req,res)=>{
     
 })
 
-// routes.get('/TaskCheckComplete',async(req,res)=>{
-//     try{
-        
-//     }catch(err){
-//         res.send(err);
-//     }
+routes.delete('/deleteTask',VerifyUser,async(req,res)=>{
+    try{
+        const id=req.userId;
+        const {task}=req.body;
+        sql="DELETE FROM basic_crud.taskset WHERE id=? AND task=?"
+        db.query(sql,[id,task],(err,result)=>{
+            if(err){
+                res.status(500).send({"Error":err})
+            }else{
+                
+                res.status(200).send({status:"OK",data:result})
+                console.log('data is deleted')
+                
+            }
+        })
 
-// })
+    }catch(err){
+        res.send(err)
+        console.log(err);
+    }
+})
 
 module.exports=routes;

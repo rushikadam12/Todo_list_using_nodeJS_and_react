@@ -7,7 +7,7 @@ import {
 
   Navigate,
 } from "react-router-dom";
-import Home from "./Home/Home";
+import {Home} from "./Home/Home";
 import Navbar from "./assets/navbar/Navbar";
 import Login from "./assets/loginpage/Login";
 import Signup from "./assets/SignUp/Signup";

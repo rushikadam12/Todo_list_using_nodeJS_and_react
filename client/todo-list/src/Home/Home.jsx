@@ -6,7 +6,7 @@ import axios from 'axios'
 import { Loader } from '../assets/loader/Loader';
 const Home = () => {
   const [UserData,setUserData]=useState([]);
-  const {userLogin, setUserLogin,Loading,LoadingTime,CheckStatus} = useContext(UserContext)
+  const {setUserLogin,Loading,LoadingTime,isadd,setisadd} = useContext(UserContext)
   const [userTask,setuserTask]=useState("");
   const FetchUserData=async()=>{
     try{
@@ -45,6 +45,7 @@ const Home = () => {
     })
     if(result){
       console.log(result)
+      setisadd(!isadd)
     }else{
       console.log({'Error':'Data is not added from frontend'})
     }
@@ -72,7 +73,7 @@ const Home = () => {
           <div className='flex self-center px-2 py-2 border-none outline-none md:w-2/6 h-fit'>
             <input className='text-slate-200 self-start w-full px-2 py-2  rounded-l-lg outline-none text-xl  font-semibold bg-[#0A155A]' placeholder="What's in your mind today" 
             onChange={(e)=>{setuserTask(e.target.value)}} />
-            <button className='py-1 px-1 bg-[#0A155A] rounded-r-lg' onClick={addTask}><CiEdit size={35} color={'white'} /></button>
+            <button className='py-1 px-1 bg-[#0A155A] rounded-r-lg' onClick={()=>{addTask()}}><CiEdit size={35} color={'white'} /></button>
 
           </div>
           <Task />
@@ -85,4 +86,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export {Home};

@@ -6,7 +6,8 @@ const UserProvider = ({ children }) => {
   const [userLogin,setUserLogin]=useState(false);
   const [Loading,setLoading]=useState(false);
   const [CheckStatus,SetCheckStatus]=useState(false);
-  const [Reloade,setReloade]=useState(false);
+  const [isDelete,setisDelete]=useState(false);
+  const [isadd,setisadd]=useState(false)
   const LoadingTime=(Time)=>{
     setLoading(true);
     setTimeout(()=>{
@@ -15,7 +16,7 @@ const UserProvider = ({ children }) => {
     
   }
   return (
-    <UserContext.Provider value={{ userLogin, setUserLogin ,Loading,setLoading,LoadingTime,CheckStatus,SetCheckStatus}}>
+    <UserContext.Provider value={{ userLogin, setUserLogin ,Loading,setLoading,LoadingTime,CheckStatus,SetCheckStatus,isDelete,setisDelete,isadd,setisadd}}>
       {children}
     </UserContext.Provider>
   );
